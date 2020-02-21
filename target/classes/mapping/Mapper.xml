@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.accp.ssm.dao.IAirQualityDao">
+
+	<select id="queryAirQuality" resultType="Air_quality_index">
+		SELECT * FROM air_quality_index
+		<where>
+			<if test="qu!=null">
+				district_id = #{qu}
+			</if>
+		</where>
+		
+	</select>
+
+	
+
+	<!-- 主详新增
+	<insert id="savePerson">
+		INSERT INTO tbl_person(pid,pname,psex,pdate,pimg,pimgdata)
+		VALUES(#{person.pid},#{person.pname},#{person.psex},#{person.pdate,jdbcType=DATE},#{person.pimg},#{person.pimgdata});
+		<if test="person.addresses.size()!=0">
+			INSERT INTO tbl_address(aname,atel,apid) values
+			<foreach collection="person.addresses" item="temp" separator=",">
+				(#{temp.addressName},#{temp.addressTel},#{person.pid})
+			</foreach>
+		</if>
+	</insert>
+	 -->
+	 
+	 
+</mapper>

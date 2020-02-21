@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>空气质量监测信息库</h1>
+按区查询：<select id="sel">
+			<option value="">请选择</option>
+ 			<option value="1">天元区</option>
+ 			<option value="2">芦淞区</option>
+ 			<option value="3">荷塘区</option>
+ 			<option value="4">石峰区</option>
+ 			<option value="5">云龙示范区</option>
+ 		</select>
+<input type="button" id="cz" value="查找" />&nbsp; &nbsp; <a id="add">添加空气质量信息</a> <br/>
+
+<table border="1" id="tab">
+	<tr id="tr">
+		<td>序号</td>
+		<td>区域</td>
+		<td>监测时间</td>
+		<td>pm10数据</td>
+		<td>pm2.5数据</td>
+		<td>监测站</td>
+	</tr>
+
+</table>
+<div>
+	<button id="prev">上一页</button>&nbsp;
+	<button id="next">下一页</button>
+</div>
+
+</body>
+<script type="text/javascript" src="/ssm/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="/ssm/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+var pageInfo;
+
+function fnGotoPage(n, s ,q) {
+	$.getJSON("/ssm/api/AirQuality/" + n + "/" + s + "/" + q,function(data) {
+		pageInfo = data;
+	$("#tr").siblings().html("");
+	$.each(data.list,function(i, li) {
+		var $row = $(`<tr>
+				<td>${i+1}</td>
+				<td>${li.district_id}</td>
+				<td>${li.monitor_time}</td>
+				<td>${li.pm10}</td>
+				<td>${li.pm2d5}</td>
+				<td>${li.monitoring_station}</td>
+			</tr>`);
+	$("#tab").append($row);
+	});
+	});
+	
+}
+//上一页
+$("#prev").click(function() {
+	if (pageInfo.hasPreviousPage) {
+		fnGotoPage(pageInfo.prePage, pageInfo.pageSize);
+	} else {
+		alert("没有上一页");
+	}
+});
+
+//下一页
+$("#next").click(function() {
+	if (pageInfo.hasNextPage) {
+		fnGotoPage(pageInfo.nextPage, pageInfo.pageSize);
+	} else {
+		alert("没有下一页");
+	}
+});
+
+$("#sel").change(function() {
+	var qu = $("#sel").val();
+	fnGotoPage(1, 1, qu);
+});
+
+
+$(function() {
+	fnGotoPage(1, 3, 1);
+});
+</script>
+
+</html>
