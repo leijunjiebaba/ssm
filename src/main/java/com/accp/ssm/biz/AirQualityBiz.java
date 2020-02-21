@@ -26,4 +26,5 @@ public class AirQualityBiz {
 	
 	//@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	
+	
 }
