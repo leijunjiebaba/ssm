@@ -21,6 +21,7 @@ public class AirQualityBiz {
 	
 	public PageInfo<Air_quality_index> getAirQualityListByPage(Integer pageNum, Integer pageSize, Integer qu){
 		PageHelper.startPage(pageNum, pageSize);
+		System.out.println("111111111111s");
 		return new PageInfo<Air_quality_index>(dao.queryAirQuality(qu));
 	}
 	
